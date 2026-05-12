@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  price       Float
+  originalPrice Float?
+  image       String
+  tag         String?
+  features    String // Store as JSON string or comma-separated for simplicity
+  rating      Float    @default(0)
+  reviews     Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  orderItems  OrderItem[]
+}
+
+model Order {
+  id            String   @id @default(cuid())
+  customerName  String
+  customerPhone String
+  address       String
+  totalAmount   Float
+  paymentMethod String   // "COD", "PAYTM", "PHONEPE"
+  status        String   @default("PENDING") // PENDING, PROCESSING, COMPLETED, CANCELLED
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  items         OrderItem[]
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Float
+
+  order     Order   @relation(fields: [orderId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Settings {
+  id          String   @id @default("global")
+  activeTheme String   @default("DEFAULT")
+  qrCodeUrl   String   @default("/qr-placeholder.png")
+  upiId       String?
+  updatedAt   DateTime @updatedAt
+}
