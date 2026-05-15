@@ -9,12 +9,13 @@ export async function POST(req: Request) {
       where: { id: "global" }
     });
 
-    const adminPin = settings?.adminPin || "CHANGE_ME";
-    const staffPin = settings?.staffPin || "1234";
+    const inputPin = pin.trim().toUpperCase();
+    const adminPin = (settings?.adminPin || "CHANGE_ME").trim().toUpperCase();
+    const staffPin = (settings?.staffPin || "1234").trim().toUpperCase();
 
-    if (pin === adminPin) {
+    if (inputPin === adminPin) {
       return NextResponse.json({ success: true, role: "ADMIN" });
-    } else if (pin === staffPin) {
+    } else if (inputPin === staffPin) {
       return NextResponse.json({ success: true, role: "STAFF" });
     } else {
       return NextResponse.json({ error: "Invalid PIN" }, { status: 401 });
