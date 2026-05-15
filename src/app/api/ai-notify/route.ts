@@ -5,15 +5,8 @@ import { getSubscriptions } from '@/lib/subscriptions';
 const publicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
 const privateKey = process.env.VAPID_PRIVATE_KEY;
 
-if (publicKey && privateKey) {
-  webpush.setVapidDetails(
-    process.env.VAPID_SUBJECT || 'mailto:test@example.com',
-    publicKey,
-    privateKey
-  );
-} else {
-  console.warn('VAPID keys are not configured. Web push notifications will not work.');
-}
+// Initialization is handled inside the POST handler to avoid build-time errors with invalid keys
+
 
 // Mock AI Service that generates context-aware cleaning tips
 async function generateAITip() {
@@ -29,6 +22,20 @@ async function generateAITip() {
 
 export async function POST(req: Request) {
   try {
+    if (publicKey && privateKey) {
+      try {
+        webpush.setVapidDetails(
+          process.env.VAPID_SUBJECT || 'mailto:test@example.com',
+          publicKey,
+          privateKey
+        );
+      } catch (keyError) {
+        console.error('Failed to set VAPID details. Keys might be invalid.', keyError);
+        return NextResponse.json({ success: false, error: 'Invalid notification configuration.' }, { status: 500 });
+      }
+    } else {
+      return NextResponse.json({ success: false, error: 'Notifications are not configured.' }, { status: 500 });
+    }
     // Basic security: In production, check for a cron secret header
     // const authHeader = req.headers.get('authorization');
     // if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) return new Response('Unauthorized', { status: 401 });
