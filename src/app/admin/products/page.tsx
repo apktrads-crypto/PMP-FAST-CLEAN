@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import { useState, useEffect } from "react";
 import { Plus, Trash2 } from "lucide-react";
 
@@ -208,6 +210,7 @@ export default function AdminProducts() {
             </table>
           </div>
         )}
+      </div>
       </div>
     </div>
   );

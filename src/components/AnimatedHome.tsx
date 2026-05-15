@@ -37,9 +37,9 @@ export default function AnimatedHome({ products }: { products: Product[] }) {
               <span className="text-gray-400">CLEANLINESS.</span>
             </h1>
             <div className="flex gap-4">
-              <button className="bg-white text-black px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-[#FF5200] hover:text-white transition-all shadow-xl">
+              <Link href="/products" className="bg-white text-black px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-[#FF5200] hover:text-white transition-all shadow-xl">
                 Shop Now
-              </button>
+              </Link>
             </div>
           </div>
         </div>

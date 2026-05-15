@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { format } from "date-fns";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminDashboard() {
   const orders = await prisma.order.findMany({
     orderBy: { createdAt: "desc" },
