@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, MapPin, User, ChevronDown } from "lucide-react";
+import { Search, MapPin, User, ChevronDown, ShoppingCart } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
 import { usePathname } from "next/navigation";
 
