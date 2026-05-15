@@ -13,7 +13,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     const authStatus = localStorage.getItem("adminAuth");
-    if (authStatus === "7869278692") {
+    if (authStatus) {
       setIsAuthenticated(true);
     } else {
       setIsAuthenticated(false);
