@@ -13,27 +13,38 @@
   --accent:        #FFD93D;   /* Sun Yellow */
   --danger:        #ef4444;
 
-  --bg:        #FFF9F0;   /* Cream/Beige Background */
-  --surface:   #ffffff;
-  --surface-2: #F7EEDD;   /* Darker Cream */
-  --border:    #F1E5D1;
-  --border-2:  #E3D5BE;
+  --primary: #600B14;
+  --accent: #FF5200;
+  --bg: #FFF9F0;
+  --card-bg: #FFFFFF;
+  --text-main: #282C3F;
+  --text-muted: #686B78;
+  --border: #F1E5D1;
+  --shadow: 0 4px 16px rgba(40, 44, 63, 0.05);
+}
 
-  --text:      #282C3F;   /* Swiggy Dark Text */
-  --text-2:    #686B78;   /* Swiggy Subtext */
-  --muted:     #7E818C;
-  --subtle:    #ADB1B7;
+@layer base {
+  body {
+    @apply bg-[var(--bg)] text-[var(--text-main)] antialiased selection:bg-[#FF5200] selection:text-white;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
 
-  --shadow-xs: 0 1px 3px rgba(0,0,0,0.04);
-  --shadow-sm: 0 4px 12px rgba(0,0,0,0.06);
-  --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
-  --shadow-lg: 0 12px 32px rgba(0,0,0,0.12);
-
-  --r-sm: 12px;
-  --r-md: 18px;
-  --r-lg: 28px;
-  --r-xl: 36px;
-  --r-full: 9999px;
+@layer utilities {
+  .font-black {
+    font-weight: 900;
+    letter-spacing: -0.02em;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .text-shadow-sm {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
 }
 
 /* ---- Reset ---- */
