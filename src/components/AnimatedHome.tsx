@@ -2,127 +2,121 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Search, MapPin, ChevronRight, Star, Plus } from "lucide-react";
+import { ChevronRight, Star, ArrowRight } from "lucide-react";
 import ProductCard, { Product } from "@/components/ProductCard";
 
 const CATEGORIES = [
-  { id: "all",     name: "All",         emoji: "🛍️", active: true },
-  { id: "floor",   name: "Floor Clean", emoji: "🧹" },
-  { id: "toilet",  name: "Toilet",      emoji: "🚿" },
-  { id: "kitchen", name: "Kitchen",     emoji: "🍽️" },
-  { id: "glass",   name: "Glass",       emoji: "🪟" },
-  { id: "laundry", name: "Laundry",     emoji: "👕" },
-];
-
-const BANNERS = [
-  { id: 1, title: "Fasting Picks", sub: "Clean with PMP", color: "#FFF3E0", accent: "#FFB74D" },
-  { id: 2, title: "50% Off", sub: "Cleaning Kits", color: "#E1F5FE", accent: "#4FC3F7" },
+  { id: "all",     name: "All Collection", emoji: "🛍️" },
+  { id: "floor",   name: "Floor Care",     emoji: "🧹" },
+  { id: "toilet",  name: "Hygiene",        emoji: "🚿" },
+  { id: "kitchen", name: "Kitchen",        emoji: "🍽️" },
+  { id: "glass",   name: "Glass",          emoji: "🪟" },
+  { id: "laundry", name: "Fabric",         emoji: "👕" },
 ];
 
 export default function AnimatedHome({ products }: { products: Product[] }) {
   const [activeCat, setActiveCat] = useState("all");
 
   return (
-    <main className="min-h-screen bg-[#FFF9F0] pb-24">
-      <div className="container py-6">
-        
-        {/* ── HORIZONTAL CATEGORY BAR ───────────────────────────── */}
-        <section className="mb-8 overflow-hidden">
-          <div className="flex items-center justify-between mb-4 px-1">
-            <h2 className="text-[#282C3F] font-black text-xl tracking-tight">Shop by Category</h2>
-            <Link href="/products" className="text-[#FF5200] text-xs font-black uppercase tracking-widest hover:opacity-80 transition-opacity">
-              See All
+    <main className="bg-white">
+      {/* ── HERO BANNER (CLEAN & PRO) ─────────────────────────── */}
+      <section className="container py-8 md:py-12">
+        <div className="relative h-[300px] md:h-[400px] w-full rounded-[40px] overflow-hidden bg-gray-900 group">
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent z-10" />
+          <img 
+            src="https://images.unsplash.com/photo-1581578731548-c64695ce6958?auto=format&fit=crop&q=80&w=2070" 
+            alt="Hero"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 z-20 flex flex-col justify-center px-10 md:px-20">
+            <span className="text-[#FF5200] font-black text-xs uppercase tracking-[0.4em] mb-4">
+              Premium 2026 Edition
+            </span>
+            <h1 className="text-white text-4xl md:text-6xl font-black mb-6 leading-[0.9] tracking-tighter max-w-xl">
+              REDEFINING <br />
+              <span className="text-gray-400">CLEANLINESS.</span>
+            </h1>
+            <div className="flex gap-4">
+              <button className="bg-white text-black px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-[#FF5200] hover:text-white transition-all shadow-xl">
+                Shop Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="container pb-24">
+        {/* ── CATEGORY SECTION (PRECISE) ────────────────────────── */}
+        <section className="section-spacing">
+          <div className="flex items-end justify-between mb-12">
+            <div>
+              <p className="text-[#600B14] font-black text-[10px] uppercase tracking-[0.3em] mb-3">Essentials</p>
+              <h2 className="text-4xl font-black text-gray-900">Expert Solutions.</h2>
+            </div>
+            <Link href="/products" className="group flex items-center gap-2 text-sm font-black uppercase tracking-widest text-gray-400 hover:text-gray-900 transition-all">
+              See All <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
-          <div className="flex overflow-x-auto gap-5 pb-4 no-scrollbar -mx-5 px-5">
+
+          <div className="flex gap-4 overflow-x-auto no-scrollbar pb-4">
             {CATEGORIES.map((cat) => (
               <button 
                 key={cat.id} 
                 onClick={() => setActiveCat(cat.id)}
-                className="flex flex-col items-center group"
+                className={`flex-shrink-0 px-8 py-5 rounded-3xl border-2 transition-all duration-300 flex items-center gap-4 ${activeCat === cat.id ? "bg-[#600B14] border-[#600B14] text-white shadow-2xl shadow-[#600B14]/20 scale-105" : "bg-white border-gray-100 text-gray-500 hover:border-gray-200"}`}
               >
-                <div className={`w-16 h-16 rounded-[24px] flex items-center justify-center text-3xl transition-all duration-300 border-2 ${activeCat === cat.id ? "bg-white border-[#FF5200] shadow-lg shadow-[#FF5200]/10 scale-105" : "bg-white border-[#F1E5D1] opacity-60 group-hover:opacity-100 group-hover:border-[#FF5200]/30"}`}>
-                  {cat.emoji}
-                </div>
-                <span className={`mt-2.5 text-[11px] font-bold tracking-tight transition-colors ${activeCat === cat.id ? "text-[#282C3F]" : "text-[#7E818C]"}`}>
-                  {cat.name}
-                </span>
+                <span className="text-2xl">{cat.emoji}</span>
+                <span className="text-sm font-black tracking-tight">{cat.name}</span>
               </button>
             ))}
           </div>
         </section>
 
-        {/* ── PROMO BANNERS ─────────────────────────────────────── */}
-        <section className="mb-10">
-          <div className="flex gap-5 overflow-x-auto pb-4 no-scrollbar -mx-5 px-5 snap-x">
-            {BANNERS.map((banner) => (
-              <div 
-                key={banner.id}
-                className="min-w-[300px] h-[180px] rounded-[40px] p-8 flex flex-col justify-center relative overflow-hidden snap-center shadow-md border border-white/20"
-                style={{ backgroundColor: banner.color }}
-              >
-                <div className="relative z-10">
-                  <span className="bg-[#600B14] text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-widest mb-3 inline-block">
-                    Limited Offer
-                  </span>
-                  <h3 className="text-[#282C3F] font-black text-2xl leading-tight mb-1">{banner.title}</h3>
-                  <p className="text-[#686B78] text-[13px] font-bold opacity-80">{banner.sub}</p>
-                  <button className="mt-5 bg-white text-[#282C3F] px-5 py-2 rounded-2xl text-[11px] font-black uppercase tracking-widest shadow-sm hover:scale-105 transition-transform">
-                    Explore Now
-                  </button>
-                </div>
-                {/* Decorative CSS shapes for pro feel */}
-                <div 
-                  className="w-48 h-48 rounded-full blur-3xl absolute -right-10 -bottom-10 opacity-40 mix-blend-multiply"
-                  style={{ backgroundColor: banner.accent }}
-                />
-                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-xl" />
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ── FEATURED PRODUCTS ─────────────────────────────────── */}
-        <section className="mb-12">
-          <div className="flex items-end justify-between mb-8 px-1">
-            <div>
-              <h2 className="text-[#282C3F] font-black text-2xl tracking-tight">Best Sellers</h2>
-              <div className="flex items-center gap-2 mt-1.5">
-                <div className="flex items-center gap-0.5">
-                  {[1,2,3,4,5].map(i => <Star key={i} size={12} className="text-[#FF5200] fill-[#FF5200]" />)}
-                </div>
-                <span className="text-[#686B78] text-[11px] font-bold uppercase tracking-widest opacity-60">Trusted by 50k+ Homes</span>
-              </div>
+        {/* ── PRODUCT GRID (MODULAR) ───────────────────────────── */}
+        <section className="section-spacing border-t border-gray-50">
+          <div className="flex items-center justify-between mb-12">
+            <h2 className="text-3xl font-black text-gray-900">Featured Products</h2>
+            <div className="flex items-center gap-1.5 px-4 py-2 bg-gray-50 rounded-full">
+              <Star size={14} className="text-[#FF5200] fill-[#FF5200]" />
+              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Top Rated 2026</span>
             </div>
-            <Link href="/products" className="bg-white w-12 h-12 rounded-2xl border border-[#F1E5D1] flex items-center justify-center shadow-sm hover:border-[#FF5200] transition-colors">
-              <ChevronRight size={20} className="text-[#282C3F]" />
-            </Link>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
         </section>
 
-        {/* ── FOOTER-ISH BANNER ─────────────────────────────────── */}
-        <section className="mt-8 bg-[#600B14] rounded-[48px] p-10 shadow-2xl relative overflow-hidden group">
-          <div className="relative z-10 flex flex-col items-center text-center">
-            <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-3xl flex items-center justify-center mb-6 border border-white/20 group-hover:scale-110 transition-transform duration-500">
-              <Plus size={32} className="text-white" />
+        {/* ── PROMO (LUXURY FEEL) ───────────────────────────────── */}
+        <section className="mt-20">
+          <div className="bg-[#F9FAFB] rounded-[60px] p-12 md:p-24 flex flex-col md:flex-row items-center justify-between gap-12 relative overflow-hidden">
+            <div className="relative z-10 max-w-md">
+              <h3 className="text-4xl md:text-5xl font-black text-gray-900 mb-6 leading-tight">
+                Quality that <br /> speaks for itself.
+              </h3>
+              <p className="text-gray-500 font-bold mb-10 leading-relaxed">
+                Experience the science of cleaning. Our advanced formulas are designed for those who don't compromise.
+              </p>
+              <button className="bg-gray-900 text-white px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-[#600B14] transition-all">
+                Learn our story
+              </button>
             </div>
-            <h3 className="text-white font-black text-3xl mb-3 tracking-tight">PMP Fast Clean</h3>
-            <p className="text-white/70 text-sm font-bold max-w-[240px] leading-relaxed mb-8">
-              Join India's fastest growing community for smart cleaning.
-            </p>
-            <button className="bg-[#FF5200] text-white px-8 py-3.5 rounded-2xl text-xs font-black uppercase tracking-[0.2em] shadow-xl shadow-[#FF5200]/20 hover:bg-white hover:text-[#600B14] transition-all">
-              Become a Member
-            </button>
+            <div className="relative z-10 w-full max-w-sm aspect-square bg-white rounded-[40px] shadow-2xl p-8 flex items-center justify-center group">
+              <img 
+                src="/product-1.png" 
+                alt="Feature" 
+                className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
+              />
+              <div className="absolute -top-4 -right-4 bg-[#FF5200] text-white w-20 h-20 rounded-full flex items-center justify-center font-black text-xs uppercase text-center leading-tight rotate-12">
+                Sale <br /> Live
+              </div>
+            </div>
+            
+            {/* Background Detail */}
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#600B14]/5 rounded-full -mr-32 -mt-32 blur-3xl" />
           </div>
-          {/* Background decoration */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
-          <div className="absolute -left-20 -bottom-20 w-64 h-64 bg-[#FF5200]/20 rounded-full blur-3xl" />
         </section>
       </div>
     </main>

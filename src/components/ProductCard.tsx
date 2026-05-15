@@ -28,58 +28,61 @@ export default function ProductCard({ product }: { product: Product }) {
     : null;
 
   return (
-    <Link href={`/product/${product.id}`} className="group flex flex-col active:scale-[0.98] transition-transform">
-      {/* Image Area */}
-      <div className="relative aspect-[4/5] bg-white rounded-[32px] border border-[#F1E5D1] overflow-hidden flex items-center justify-center p-6 mb-4 group-hover:shadow-xl transition-all duration-500">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#F7EEDD]/30 opacity-0 group-hover:opacity-100 transition-opacity" />
-        <Image
-          src={product.image || "/product-1.png"}
-          alt={product.name}
-          width={180} height={180}
-          className="object-contain drop-shadow-2xl group-hover:scale-110 transition-transform duration-700"
-          sizes="200px"
-        />
-        
-        {discount && discount > 0 && (
-          <div className="absolute top-4 left-4 bg-[#FF5200] text-white text-[9px] font-black px-2.5 py-1 rounded-xl uppercase tracking-widest shadow-lg shadow-[#FF5200]/20">
-            {discount}% OFF
-          </div>
-        )}
-
-        <button 
-          onClick={handleAdd}
-          className="absolute bottom-4 right-4 bg-white text-[#282C3F] w-10 h-10 rounded-2xl flex items-center justify-center shadow-xl border border-[#F1E5D1] hover:bg-[#600B14] hover:text-white transition-all group-hover:scale-110"
-        >
-          <Plus size={20} strokeWidth={3} />
-        </button>
-      </div>
-
-      {/* Info Area */}
-      <div className="px-2">
-        <div className="flex items-center gap-2 mb-1.5 opacity-60">
-          <div className="flex items-center gap-0.5">
-            <Star size={10} className="text-[#FF5200] fill-[#FF5200]" />
-            <span className="text-[10px] font-black text-[#282C3F]">4.8</span>
-          </div>
-          <div className="w-1 h-1 rounded-full bg-[#ADB1B7]" />
-          <span className="text-[10px] font-bold text-[#686B78] uppercase tracking-tighter">Fast Action</span>
-        </div>
-        
-        <h3 className="text-[#282C3F] font-black text-sm leading-tight mb-2 group-hover:text-[#FF5200] transition-colors line-clamp-1">
-          {product.name}
-        </h3>
-        
-        <div className="flex items-baseline gap-2">
-          <span className="text-[#282C3F] font-black text-lg">
-            ₹{product.price}
-          </span>
-          {product.originalPrice && (
-            <span className="text-[11px] text-[#ADB1B7] line-through font-bold">
-              ₹{product.originalPrice}
-            </span>
+    <div className="group relative">
+      <Link href={`/product/${product.id}`} className="block">
+        {/* Image Container (High-end Minimalism) */}
+        <div className="aspect-[3/4] bg-[#F9FAFB] rounded-[32px] overflow-hidden flex items-center justify-center p-10 transition-all duration-500 group-hover:bg-gray-100 group-hover:shadow-2xl group-hover:shadow-black/5 relative">
+          <Image
+            src={product.image || "/product-1.png"}
+            alt={product.name}
+            width={240} height={240}
+            className="object-contain w-full h-full drop-shadow-2xl transition-transform duration-700 group-hover:scale-110"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+          />
+          
+          {discount && discount > 0 && (
+            <div className="absolute top-6 left-6 bg-[#600B14] text-white text-[9px] font-black px-3 py-1.5 rounded-xl uppercase tracking-widest">
+              {discount}% Off
+            </div>
           )}
         </div>
-      </div>
-    </Link>
+
+        {/* Content (Precise Typography) */}
+        <div className="mt-8 px-2 text-center sm:text-left">
+          <div className="flex items-center justify-center sm:justify-start gap-2 mb-2">
+            <div className="flex items-center gap-0.5">
+              <Star size={10} className="text-[#FF5200] fill-[#FF5200]" />
+              <span className="text-[10px] font-black text-gray-900">4.9</span>
+            </div>
+            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest border-l pl-2 border-gray-100">
+              Verified
+            </span>
+          </div>
+
+          <h3 className="text-lg font-black text-gray-900 leading-tight mb-2 group-hover:text-[#600B14] transition-colors">
+            {product.name}
+          </h3>
+          
+          <p className="text-gray-400 text-xs font-bold leading-relaxed mb-6 line-clamp-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            {product.description}
+          </p>
+
+          <div className="flex items-center justify-center sm:justify-start gap-4">
+            <span className="text-xl font-black text-gray-900">₹{product.price}</span>
+            {product.originalPrice && (
+              <span className="text-sm text-gray-300 line-through font-bold">₹{product.originalPrice}</span>
+            )}
+          </div>
+        </div>
+      </Link>
+
+      {/* Action Button (Professional Float) */}
+      <button 
+        onClick={handleAdd}
+        className="absolute bottom-[104px] right-6 bg-white text-gray-900 w-14 h-14 rounded-2xl flex items-center justify-center shadow-xl border border-gray-50 hover:bg-[#600B14] hover:text-white transition-all scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 shadow-[#600B14]/10"
+      >
+        <Plus size={24} strokeWidth={3} />
+      </button>
+    </div>
   );
 }

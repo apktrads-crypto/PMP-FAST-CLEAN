@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingBag, MapPin, User, Search, ChevronDown } from "lucide-react";
+import { Search, MapPin, User, ChevronDown } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
 import { usePathname } from "next/navigation";
 
@@ -12,49 +12,51 @@ export default function TopNav() {
   if (pathname?.startsWith("/admin")) return null;
 
   return (
-    <header className="sticky top-0 z-50 bg-[#FFF9F0]/80 backdrop-blur-xl border-b border-[#F1E5D1]">
-      <div className="container py-4">
-        {/* Top Row: Brand & Profile */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-4">
-            <div className="bg-[#600B14] w-12 h-12 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#600B14]/20">
-              <MapPin size={22} />
-            </div>
-            <div>
-              <div className="flex items-center gap-1.5 mb-0.5">
-                <span className="font-black text-[#282C3F] text-xl leading-none">Home</span>
-                <ChevronDown size={16} className="text-[#FF5200]" />
-              </div>
-              <p className="text-[#686B78] text-[11px] font-bold tracking-tight uppercase opacity-70">
-                PMP Fast Clean • Phase 3, City Center
-              </p>
-            </div>
-          </div>
+    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
+      <div className="container flex items-center justify-between h-20 md:h-24">
+        {/* Left: Location/Brand */}
+        <div className="flex items-center gap-6">
+          <Link href="/" className="flex flex-col">
+            <span className="text-2xl font-black tracking-tighter leading-none text-gray-900">
+              PMP <span className="text-[#600B14]">CLEAN</span>
+            </span>
+          </Link>
           
-          <div className="flex items-center gap-3">
-            <button className="bg-white p-2.5 rounded-2xl border border-[#F1E5D1] shadow-sm hover:border-[#FF5200] transition-colors">
-              <Search size={20} className="text-[#282C3F]" />
-            </button>
-            <button className="bg-white p-2.5 rounded-2xl border border-[#F1E5D1] shadow-sm">
-              <User size={20} className="text-[#282C3F]" />
-            </button>
+          <div className="hidden md:flex items-center gap-2 pl-6 border-l border-gray-100 h-10">
+            <MapPin size={18} className="text-[#600B14]" />
+            <div>
+              <div className="flex items-center gap-1">
+                <span className="text-sm font-bold text-gray-900">Phase 3, City Center</span>
+                <ChevronDown size={14} className="text-gray-400" />
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Search Bar (Static placeholder for pro feel) */}
-        <div className="relative group">
-          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#ADB1B7] group-focus-within:text-[#FF5200] transition-colors">
-            <Search size={18} strokeWidth={2.5} />
-          </div>
-          <input 
-            type="text" 
-            placeholder="Search for cleaners, gels, sprays..." 
-            className="w-full bg-white border-2 border-[#F1E5D1] focus:border-[#FF5200] rounded-[20px] py-3.5 pl-12 pr-4 text-sm font-bold text-[#282C3F] placeholder:text-[#ADB1B7] outline-none transition-all shadow-sm"
-          />
-          <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
-            <div className="h-4 w-[2px] bg-[#F1E5D1]" />
-            <div className="w-2 h-2 rounded-full bg-[#FF5200] animate-pulse" />
-          </div>
+        {/* Center/Right: Actions */}
+        <div className="flex items-center gap-4 md:gap-8">
+          <button className="flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-gray-900 transition-colors">
+            <Search size={20} />
+            <span className="hidden lg:inline">Search</span>
+          </button>
+          
+          <Link href="/cart" className="flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-gray-900 transition-colors relative">
+            <div className="bg-gray-100 p-2.5 rounded-full">
+              <User size={20} />
+            </div>
+            <span className="hidden lg:inline">Profile</span>
+          </Link>
+
+          <Link href="/cart" className="relative group">
+            <div className="bg-[#600B14] text-white px-5 py-2.5 rounded-xl flex items-center gap-3 shadow-lg shadow-[#600B14]/10 group-hover:scale-105 transition-all">
+              <span className="text-xs font-black uppercase tracking-widest">Cart</span>
+              {cartCount > 0 && (
+                <span className="bg-white text-[#600B14] w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-black">
+                  {cartCount}
+                </span>
+              )}
+            </div>
+          </Link>
         </div>
       </div>
     </header>
