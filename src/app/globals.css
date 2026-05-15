@@ -1,38 +1,24 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
-  --primary: #600B14;
-  --accent: #FF5200;
-  --bg: #FFFFFF;
-  --surface: #F9FAFB;
-  --text-main: #111827;
-  --text-muted: #6B7280;
-  --border: #E5E7EB;
-  --radius: 20px;
+@theme {
+  --color-primary: #600B14;
+  --color-accent: #FF5200;
+  --color-bg: #FFFFFF;
+  --color-surface: #F9FAFB;
+  --color-text-main: #111827;
+  --color-text-muted: #6B7280;
+  --color-border: #E5E7EB;
+  
+  --radius-pro: 20px;
 }
 
 @layer base {
   body {
-    @apply bg-white text-[var(--text-main)] antialiased selection:bg-[#600B14] selection:text-white;
+    background-color: white;
+    color: var(--color-text-main);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     font-family: var(--font-sans), sans-serif;
-  }
-  h1, h2, h3, h4 {
-    @apply tracking-tighter;
-    font-family: var(--font-display), sans-serif;
-  }
-}
-
-@layer components {
-  .btn-pro {
-    @apply px-6 py-3 rounded-[16px] font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 active:scale-[0.95];
-  }
-  .btn-pro-primary {
-    @apply bg-[var(--primary)] text-white shadow-lg shadow-[#600B14]/10 hover:brightness-110;
-  }
-  .btn-pro-outline {
-    @apply border-2 border-[var(--border)] text-[var(--text-main)] hover:border-[var(--primary)] hover:text-[var(--primary)];
   }
 }
 
@@ -44,25 +30,22 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  .glass {
-    @apply bg-white/70 backdrop-blur-xl border border-white/20;
-  }
 }
 
 .container {
   @apply max-w-7xl mx-auto px-6 md:px-10 lg:px-16;
 }
 
+/* Custom buttons */
+.btn-pro-primary {
+  @apply bg-[#600B14] text-white px-6 py-3 rounded-[16px] font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 active:scale-[0.95] shadow-lg shadow-[#600B14]/10 hover:brightness-110;
+}
+
+.btn-pro-outline {
+  @apply border-2 border-gray-100 text-gray-900 px-6 py-3 rounded-[16px] font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 active:scale-[0.95] hover:border-[#600B14] hover:text-[#600B14];
+}
+
+/* Sections */
 .section-spacing {
   @apply py-12 md:py-20;
-}
-
-/* Custom transitions */
-.page-fade {
-  animation: fadeIn 0.8s ease-out forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
 }
