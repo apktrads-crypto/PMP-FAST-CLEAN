@@ -9,20 +9,25 @@ datasource db {
 }
 
 model Product {
-  id          String   @id @default(cuid())
-  name        String
-  description String
-  price       Float
-  originalPrice Float?
-  image       String
-  tag         String?
-  features    String // Store as JSON string or comma-separated for simplicity
-  rating      Float    @default(0)
-  reviews     Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id            String   @id @default(cuid())
+  productCode   String   @unique
+  name          String
+  description   String
+  price         Float    // This is the current Selling Price
+  originalPrice Float?   // This is the MRP
+  costPrice     Float    // Secret: Your cost
+  minSellPrice  Float    // Secret: Floor price
+  maxDiscount   Float    // Secret: Max allowed discount
+  image         String
+  tag           String?
+  features      String
+  stock         Int      @default(0)
+  rating        Float    @default(0)
+  reviews       Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  orderItems  OrderItem[]
+  orderItems    OrderItem[]
 }
 
 model Order {
@@ -52,6 +57,7 @@ model OrderItem {
 
 model Settings {
   id          String   @id @default("global")
+  adminPin    String   @default("CHANGE_ME")
   activeTheme String   @default("DEFAULT")
   qrCodeUrl   String   @default("/qr-placeholder.png")
   upiId       String?

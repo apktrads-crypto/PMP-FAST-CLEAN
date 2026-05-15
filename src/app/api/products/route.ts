@@ -18,12 +18,18 @@ export async function POST(req: Request) {
     const body = await req.json();
     const product = await prisma.product.create({
       data: {
+        productCode: body.productCode,
         name: body.name,
         description: body.description,
         price: body.price,
+        originalPrice: body.originalPrice || null,
+        costPrice: body.costPrice,
+        minSellPrice: body.minSellPrice,
+        maxDiscount: body.maxDiscount,
         image: body.image || "/product-1.png",
         tag: body.tag || null,
         features: body.features || "",
+        stock: body.stock || 0,
       }
     });
     return NextResponse.json(product, { status: 201 });

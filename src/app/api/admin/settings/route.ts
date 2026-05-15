@@ -28,12 +28,14 @@ export async function POST(req: Request) {
         activeTheme: data.activeTheme,
         qrCodeUrl: data.qrCodeUrl,
         upiId: data.upiId,
+        adminPin: data.adminPin,
       },
       create: {
         id: "global",
         activeTheme: data.activeTheme,
         qrCodeUrl: data.qrCodeUrl,
         upiId: data.upiId,
+        adminPin: data.adminPin || "7869278692",
       },
     });
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Save, Image as ImageIcon, Palette } from "lucide-react";
+import { Save, Image as ImageIcon, Palette, Lock } from "lucide-react";
 
 const THEMES = [
   { id: "DEFAULT", name: "Premium Clean (Cyan/Orange)", color: "bg-cyan-500" },
@@ -15,6 +15,7 @@ export default function AdminSettings() {
     activeTheme: "DEFAULT",
     qrCodeUrl: "",
     upiId: "",
+    adminPin: "",
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -81,6 +82,26 @@ export default function AdminSettings() {
                 <span className="font-semibold text-sm">{theme.name}</span>
               </button>
             ))}
+          </div>
+        </section>
+
+        {/* Admin Security */}
+        <section className="bg-surface p-6 rounded-md border border-border shadow-sm">
+          <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
+            <Lock size={20} className="text-primary" /> Admin Security
+          </h2>
+          <div className="space-y-4">
+            <div>
+              <label className="text-xs font-bold text-muted mb-1 block">Change Admin PIN</label>
+              <input
+                type="password"
+                placeholder="Enter new 10-digit PIN"
+                className="w-full bg-background border border-border rounded-md px-3 py-2 outline-none focus:border-primary font-mono tracking-widest"
+                value={settings.adminPin}
+                onChange={(e) => setSettings({ ...settings, adminPin: e.target.value })}
+              />
+              <p className="text-[10px] text-muted mt-1">This PIN is required to access the Admin Panel. Keep it secret.</p>
+            </div>
           </div>
         </section>
 

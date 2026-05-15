@@ -10,14 +10,25 @@ export default function AdminLogin() {
   const [pin, setPin] = useState("");
   const [error, setError] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (pin === "7869278692") {
-      localStorage.setItem("adminAuth", pin);
-      router.push("/admin");
-    } else {
-      setError(true);
-      setPin("");
+    try {
+      const res = await fetch("/api/admin/verify-pin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pin }),
+      });
+      
+      if (res.ok) {
+        localStorage.setItem("adminAuth", pin);
+        router.push("/admin");
+      } else {
+        setError(true);
+        setPin("");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Verification failed. Please check your connection.");
     }
   };
 
