@@ -3,52 +3,7 @@
 import { useState } from "react";
 import { Bell, Package, Tag, Info, CheckCircle2, Trash2 } from "lucide-react";
 
-const SAMPLE_NOTIFICATIONS = [
-  {
-    id: 1,
-    type: "order",
-    icon: Package,
-    iconColor: "#6366f1",
-    iconBg: "#eef2ff",
-    title: "Order Confirmed!",
-    message: "Your order #g1m0dqfq has been confirmed and is being processed.",
-    time: "2 hours ago",
-    read: false,
-  },
-  {
-    id: 2,
-    type: "offer",
-    icon: Tag,
-    iconColor: "#f59e0b",
-    iconBg: "#fffbeb",
-    title: "Special Offer 🎉",
-    message: "Get 50% off on all Floor Cleaners today only! Use code CLEAN50.",
-    time: "5 hours ago",
-    read: false,
-  },
-  {
-    id: 3,
-    type: "info",
-    icon: Info,
-    iconColor: "#10b981",
-    iconBg: "#ecfdf5",
-    title: "New Products Added",
-    message: "Check out our new range of Eco-Friendly Bathroom Cleaners.",
-    time: "Yesterday",
-    read: true,
-  },
-  {
-    id: 4,
-    type: "order",
-    icon: CheckCircle2,
-    iconColor: "#6366f1",
-    iconBg: "#eef2ff",
-    title: "Delivery Successful",
-    message: "Your order #snekvb62 has been delivered. Enjoy clean homes!",
-    time: "2 days ago",
-    read: true,
-  },
-];
+const SAMPLE_NOTIFICATIONS: any[] = [];
 
 export default function NotificationsPage() {
   const [notifications, setNotifications] = useState(SAMPLE_NOTIFICATIONS);
@@ -64,149 +19,66 @@ export default function NotificationsPage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f8f9ff", paddingBottom: 80 }}>
+    <div className="min-h-screen bg-[#FFF9F0] pb-24">
       {/* Header */}
-      <div style={{
-        background: "white",
-        padding: "20px 20px 16px",
-        borderBottom: "1px solid #f3f4f6",
-        position: "sticky",
-        top: 0,
-        zIndex: 10,
-      }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <Bell size={22} color="#6366f1" />
-            <h1 style={{ fontSize: 20, fontWeight: 700, color: "#111827", margin: 0 }}>
-              Alerts
-            </h1>
-            {unreadCount > 0 && (
-              <span style={{
-                background: "#ef4444",
-                color: "white",
-                fontSize: 11,
-                fontWeight: 700,
-                borderRadius: 99,
-                padding: "2px 8px",
-              }}>
-                {unreadCount} new
-              </span>
-            )}
+      <div className="bg-white px-6 py-5 border-b border-[#F1E5D1] sticky top-0 z-10 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="bg-[#600B14] p-2 rounded-xl text-white">
+            <Bell size={20} />
           </div>
-          {unreadCount > 0 && (
-            <button
-              onClick={markAllRead}
-              style={{
-                background: "none",
-                border: "none",
-                color: "#6366f1",
-                fontSize: 13,
-                fontWeight: 600,
-                cursor: "pointer",
-              }}
-            >
-              Mark all read
-            </button>
-          )}
+          <h1 className="text-xl font-black text-[#282C3F]">Alerts</h1>
         </div>
+        
+        {unreadCount > 0 && (
+          <button 
+            onClick={markAllRead}
+            className="text-[#FF5200] text-xs font-black uppercase tracking-wider"
+          >
+            Mark all read
+          </button>
+        )}
       </div>
 
       {/* Notifications List */}
-      <div style={{ padding: "16px 16px" }}>
+      <div className="px-6 py-6">
         {notifications.length === 0 ? (
-          <div style={{
-            textAlign: "center",
-            padding: "60px 20px",
-            color: "#9ca3af",
-          }}>
-            <Bell size={48} strokeWidth={1.2} style={{ margin: "0 auto 16px", opacity: 0.4 }} />
-            <p style={{ fontSize: 16, fontWeight: 600, marginBottom: 6 }}>No Alerts Yet</p>
-            <p style={{ fontSize: 13 }}>We&apos;ll notify you about orders, offers &amp; more.</p>
+          <div className="flex flex-col items-center justify-center py-20 text-center">
+            <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center border border-[#F1E5D1] shadow-sm mb-6">
+              <Bell size={40} className="text-[#ADB1B7] opacity-40" />
+            </div>
+            <h2 className="text-[#282C3F] font-black text-xl mb-2">No Alerts Yet</h2>
+            <p className="text-[#7E818C] text-sm font-medium max-w-[200px]">
+              We&apos;ll notify you about orders, offers &amp; cleaning tips.
+            </p>
           </div>
         ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <div className="flex flex-col gap-4">
             {notifications.map((notif) => {
               const IconComp = notif.icon;
               return (
                 <div
                   key={notif.id}
-                  style={{
-                    background: notif.read ? "white" : "#fafafe",
-                    border: `1px solid ${notif.read ? "#f3f4f6" : "#e0e7ff"}`,
-                    borderRadius: 16,
-                    padding: "14px 14px",
-                    display: "flex",
-                    gap: 12,
-                    alignItems: "flex-start",
-                    position: "relative",
-                    boxShadow: notif.read ? "none" : "0 2px 12px rgba(99,102,241,0.07)",
-                  }}
+                  className={`bg-white border border-[#F1E5D1] rounded-[24px] p-4 flex gap-4 items-start shadow-sm transition-all ${!notif.read ? "ring-1 ring-[#FF5200]" : ""}`}
                 >
-                  {/* Unread dot */}
-                  {!notif.read && (
-                    <span style={{
-                      position: "absolute",
-                      top: 14,
-                      right: 14,
-                      width: 8,
-                      height: 8,
-                      borderRadius: "50%",
-                      background: "#6366f1",
-                    }} />
-                  )}
-
-                  {/* Icon */}
-                  <div style={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: 12,
-                    background: notif.iconBg,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                  }}>
-                    <IconComp size={20} color={notif.iconColor} />
+                  <div className="w-12 h-12 rounded-2xl bg-[#F7EEDD] flex items-center justify-center flex-shrink-0">
+                    <IconComp size={22} className="text-[#600B14]" />
                   </div>
 
-                  {/* Content */}
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={{
-                      fontSize: 14,
-                      fontWeight: notif.read ? 600 : 700,
-                      color: "#111827",
-                      margin: "0 0 4px",
-                    }}>
-                      {notif.title}
-                    </p>
-                    <p style={{
-                      fontSize: 13,
-                      color: "#6b7280",
-                      margin: "0 0 6px",
-                      lineHeight: 1.4,
-                    }}>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-1">
+                      <h3 className="font-bold text-[#282C3F] text-sm">{notif.title}</h3>
+                      <span className="text-[10px] text-[#ADB1B7] font-bold">{notif.time}</span>
+                    </div>
+                    <p className="text-[#686B78] text-xs font-medium leading-relaxed">
                       {notif.message}
                     </p>
-                    <span style={{ fontSize: 11, color: "#9ca3af", fontWeight: 500 }}>
-                      {notif.time}
-                    </span>
                   </div>
 
-                  {/* Delete button */}
                   <button
                     onClick={() => deleteNotification(notif.id)}
-                    style={{
-                      background: "none",
-                      border: "none",
-                      cursor: "pointer",
-                      padding: 4,
-                      color: "#d1d5db",
-                      flexShrink: 0,
-                      marginTop: 2,
-                    }}
-                    title="Delete"
+                    className="text-[#ADB1B7] hover:text-[#EF4444] p-1"
                   >
-                    <Trash2 size={15} />
+                    <Trash2 size={16} />
                   </button>
                 </div>
               );
