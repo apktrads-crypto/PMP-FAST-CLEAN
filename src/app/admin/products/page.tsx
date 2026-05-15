@@ -10,6 +10,7 @@ export default function AdminProducts() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [command, setCommand] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   
   const [formData, setFormData] = useState({
     productCode: "",
@@ -39,6 +40,8 @@ export default function AdminProducts() {
   };
 
   useEffect(() => {
+    const role = typeof window !== 'undefined' ? localStorage.getItem("adminRole") : null;
+    setIsAdmin(role === "ADMIN");
     fetchProducts();
   }, []);
 
@@ -282,9 +285,9 @@ export default function AdminProducts() {
                 <thead>
                   <tr className="bg-gray-50/50">
                     <th className="px-8 py-8 text-[10px] font-black text-gray-400 uppercase tracking-widest">Product / Code</th>
-                    <th className="px-8 py-8 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">Cost (CP)</th>
+                    {isAdmin && <th className="px-8 py-8 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">Cost (CP)</th>}
                     <th className="px-8 py-8 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">MRP / Sell</th>
-                    <th className="px-8 py-8 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">Live Profit</th>
+                    {isAdmin && <th className="px-8 py-8 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">Live Profit</th>}
                     <th className="px-8 py-8 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">In Stock</th>
                     <th className="px-8 py-8 text-[10px] font-black text-gray-400 uppercase tracking-widest text-right">Actions</th>
                   </tr>
@@ -306,25 +309,29 @@ export default function AdminProducts() {
                             </div>
                           </div>
                         </td>
-                        <td className="px-8 py-8 text-center">
-                          <span className="font-black text-gray-900 text-lg">₹{product.costPrice}</span>
-                        </td>
+                        {isAdmin && (
+                          <td className="px-8 py-8 text-center">
+                            <span className="font-black text-gray-900 text-lg">₹{product.costPrice}</span>
+                          </td>
+                        )}
                         <td className="px-8 py-8 text-center">
                           <div className="flex flex-col items-center">
                             <span className="text-[10px] font-black text-gray-300 line-through">₹{product.originalPrice}</span>
                             <span className="font-black text-gray-900 text-lg">₹{product.price}</span>
                           </div>
                         </td>
-                        <td className="px-8 py-8 text-center">
-                          <div className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-[16px] font-black text-xs ${
-                            profit >= 40 ? 'bg-green-100 text-green-600' : 
-                            profit >= 20 ? 'bg-yellow-100 text-yellow-600' : 
-                            'bg-red-100 text-red-600'
-                          }`}>
-                            <TrendingUp size={14} />
-                            ₹{profit}
-                          </div>
-                        </td>
+                        {isAdmin && (
+                          <td className="px-8 py-8 text-center">
+                            <div className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-[16px] font-black text-xs ${
+                              profit >= 40 ? 'bg-green-100 text-green-600' : 
+                              profit >= 20 ? 'bg-yellow-100 text-yellow-600' : 
+                              'bg-red-100 text-red-600'
+                            }`}>
+                              <TrendingUp size={14} />
+                              ₹{profit}
+                            </div>
+                          </td>
+                        )}
                         <td className="px-8 py-8 text-center">
                           <div className="flex flex-col items-center">
                             <span className={`text-xl font-black ${isLowStock ? 'text-red-500' : 'text-gray-900'}`}>{product.stock}</span>

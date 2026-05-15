@@ -58,8 +58,19 @@ model OrderItem {
 model Settings {
   id          String   @id @default("global")
   adminPin    String   @default("CHANGE_ME")
+  staffPin    String   @default("1234")
   activeTheme String   @default("DEFAULT")
   qrCodeUrl   String   @default("/qr-placeholder.png")
   upiId       String?
   updatedAt   DateTime @updatedAt
+}
+
+model Expense {
+  id          String   @id @default(cuid())
+  title       String
+  amount      Float
+  category    String   // Rent, Salary, Bill, Misc
+  date        DateTime @default(now())
+  description String?
+  createdAt   DateTime @default(now())
 }

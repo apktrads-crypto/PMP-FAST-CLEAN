@@ -19,8 +19,11 @@ export default function AdminLogin() {
         body: JSON.stringify({ pin }),
       });
       
+      const data = await res.json();
+      
       if (res.ok) {
         localStorage.setItem("adminAuth", pin);
+        localStorage.setItem("adminRole", data.role);
         router.push("/admin");
       } else {
         setError(true);

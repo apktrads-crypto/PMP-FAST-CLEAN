@@ -9,11 +9,13 @@ export async function POST(req: Request) {
       where: { id: "global" }
     });
 
-    // Fallback PIN if settings not initialized
-    const correctPin = settings?.adminPin || "7869278692";
+    const adminPin = settings?.adminPin || "CHANGE_ME";
+    const staffPin = settings?.staffPin || "1234";
 
-    if (pin === correctPin) {
-      return NextResponse.json({ success: true });
+    if (pin === adminPin) {
+      return NextResponse.json({ success: true, role: "ADMIN" });
+    } else if (pin === staffPin) {
+      return NextResponse.json({ success: true, role: "STAFF" });
     } else {
       return NextResponse.json({ error: "Invalid PIN" }, { status: 401 });
     }

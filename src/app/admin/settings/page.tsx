@@ -16,6 +16,7 @@ export default function AdminSettings() {
     qrCodeUrl: "",
     upiId: "",
     adminPin: "",
+    staffPin: "",
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -92,15 +93,25 @@ export default function AdminSettings() {
           </h2>
           <div className="space-y-4">
             <div>
-              <label className="text-xs font-bold text-muted mb-1 block">Change Admin PIN</label>
+              <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 block">Admin Master PIN</label>
               <input
                 type="password"
-                placeholder="Enter new 10-digit PIN"
+                placeholder="Full access PIN"
                 className="w-full bg-background border border-border rounded-md px-3 py-2 outline-none focus:border-primary font-mono tracking-widest"
                 value={settings.adminPin}
                 onChange={(e) => setSettings({ ...settings, adminPin: e.target.value })}
               />
-              <p className="text-[10px] text-muted mt-1">This PIN is required to access the Admin Panel. Keep it secret.</p>
+            </div>
+            <div>
+              <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 block">Staff PIN (Limited Access)</label>
+              <input
+                type="password"
+                placeholder="Staff PIN (e.g. 1234)"
+                className="w-full bg-background border border-border rounded-md px-3 py-2 outline-none focus:border-primary font-mono tracking-widest"
+                value={settings.staffPin || ""}
+                onChange={(e) => setSettings({ ...settings, staffPin: e.target.value })}
+              />
+              <p className="text-[10px] text-muted mt-1">Staff PIN will hide Cost Prices and Profits in the dashboard.</p>
             </div>
           </div>
         </section>
