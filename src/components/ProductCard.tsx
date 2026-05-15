@@ -76,13 +76,16 @@ export default function ProductCard({ product }: { product: Product }) {
         </div>
       </Link>
 
-      {/* Action Button (Professional Float) */}
-      <button 
-        onClick={handleAdd}
-        className="absolute bottom-[104px] right-6 bg-white text-gray-900 w-14 h-14 rounded-2xl flex items-center justify-center shadow-xl border border-gray-50 hover:bg-[#600B14] hover:text-white transition-all scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 shadow-[#600B14]/10"
-      >
-        <Plus size={24} strokeWidth={3} />
-      </button>
+      {/* Action Button (Swiggy Style) */}
+      <div className="absolute top-[260px] left-1/2 -translate-x-1/2 z-20">
+        <button 
+          onClick={handleAdd}
+          className="bg-white text-[#600B14] px-8 py-2.5 rounded-xl font-black text-xs uppercase tracking-widest shadow-xl border border-gray-100 hover:bg-gray-50 active:scale-95 transition-all flex items-center gap-2"
+        >
+          <Plus size={14} strokeWidth={4} />
+          ADD
+        </button>
+      </div>
     </div>
   );
 }

@@ -19,6 +19,7 @@ export const metadata: Metadata = {
 };
 
 import OnboardingFlow from "@/components/OnboardingFlow";
+import GlobalCartBar from "@/components/GlobalCartBar";
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <NotificationManager />
           <TopNav />
           <div className="page-wrapper">{children}</div>
+          <GlobalCartBar />
           <BottomNavigation />
         </ThemeProvider>
       </body>
