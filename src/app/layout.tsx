@@ -18,14 +18,14 @@ export const metadata: Metadata = {
   appleWebApp: { capable: true, statusBarStyle: "default", title: "PMP Clean" },
 };
 
-import SplashScreen from "@/components/SplashScreen";
+import OnboardingFlow from "@/components/OnboardingFlow";
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <body suppressHydrationWarning>
         <ThemeProvider>
-          <SplashScreen />
+          <OnboardingFlow />
           <NotificationManager />
           <TopNav />
           <div className="page-wrapper">{children}</div>

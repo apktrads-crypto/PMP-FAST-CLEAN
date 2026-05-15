@@ -12,8 +12,12 @@ export default function TopNav() {
   const [address, setAddress] = useState("Detecting Location...");
 
   useEffect(() => {
-    // Initial default or saved address
-    setAddress("Phase 3, City Center");
+    const saved = localStorage.getItem("userLocation");
+    if (saved) {
+      setAddress(saved.includes(",") ? "Current Location" : saved);
+    } else {
+      setAddress("Set Location");
+    }
   }, []);
 
   const detectLocation = () => {
@@ -39,54 +43,51 @@ export default function TopNav() {
   if (pathname?.startsWith("/admin")) return null;
 
   return (
-    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
-      <div className="container flex items-center justify-between h-20 md:h-24">
-        {/* Left: Location/Brand */}
-        <div className="flex items-center gap-6">
-          <Link href="/" className="flex flex-col group">
-            <span className="text-2xl font-black tracking-tighter leading-none text-gray-900">
-              PMP <span className="text-[#600B14] group-hover:text-[#FF5200] transition-colors">CLEAN</span>
-            </span>
+    <header className="sticky top-0 z-[60] bg-white border-b border-gray-50">
+      <div className="container flex items-center justify-between h-24 md:h-28">
+        {/* Left: Location Focus */}
+        <div className="flex items-center gap-4 flex-1">
+          <Link href="/" className="flex flex-col">
+            <span className="text-2xl font-black tracking-tighter leading-none text-[#600B14]">PMP</span>
+            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Clean</span>
           </Link>
           
-          <div className="hidden md:flex items-center gap-3 pl-6 border-l border-gray-100 h-10">
-            <div className="bg-[#600B14]/5 p-2 rounded-xl text-[#600B14]">
+          <div className="flex items-center gap-3 pl-6 border-l border-gray-100 h-12 ml-2">
+            <div className="bg-[#600B14] p-2 rounded-xl text-white shadow-lg shadow-[#600B14]/20">
               <MapPin size={18} />
             </div>
-            <div className="flex flex-col">
-              <div className="flex items-center gap-1.5 cursor-pointer hover:opacity-70 transition-opacity" onClick={detectLocation}>
-                <span className="text-sm font-black text-gray-900 leading-none">{address}</span>
-                <ChevronDown size={14} className="text-[#FF5200]" />
+            <div className="flex flex-col cursor-pointer" onClick={detectLocation}>
+              <div className="flex items-center gap-1.5">
+                <span className="text-sm font-black text-gray-900 leading-none truncate max-w-[120px] md:max-w-[200px]">{address}</span>
+                <ChevronDown size={14} className="text-[#600B14]" />
               </div>
-              <button 
-                onClick={detectLocation}
-                className="text-[9px] font-black text-[#FF5200] uppercase tracking-widest mt-1 hover:underline text-left"
-              >
-                Detect My Location
-              </button>
+              <span className="text-[9px] font-black text-gray-300 uppercase tracking-widest mt-1">Change</span>
             </div>
           </div>
         </div>
 
-        {/* Center/Right: Actions */}
-        <div className="flex items-center gap-4 md:gap-8">
-          <button className="flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-gray-900 transition-colors">
+        {/* Center: Search (Desktop) */}
+        <div className="hidden lg:flex flex-1 max-w-md mx-8 relative">
+           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300" size={18} />
+           <input 
+             type="text" 
+             placeholder="Search for cleaners, soaps..." 
+             className="w-full bg-gray-50 border-2 border-transparent rounded-2xl px-12 py-3.5 font-bold text-sm focus:border-[#600B14] focus:bg-white outline-none transition-all" 
+           />
+        </div>
+
+        {/* Right: Cart/Profile */}
+        <div className="flex items-center gap-4">
+          <button className="lg:hidden p-3 bg-gray-50 rounded-xl text-gray-500">
             <Search size={20} />
-            <span className="hidden lg:inline">Search</span>
           </button>
           
-          <Link href="/cart" className="flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-gray-900 transition-colors relative">
-            <div className="bg-gray-100 p-2.5 rounded-full">
-              <User size={20} />
-            </div>
-            <span className="hidden lg:inline">Profile</span>
-          </Link>
-
           <Link href="/cart" className="relative group">
-            <div className="bg-[#600B14] text-white px-5 py-2.5 rounded-xl flex items-center gap-3 shadow-lg shadow-[#600B14]/10 group-hover:scale-105 transition-all">
-              <span className="text-xs font-black uppercase tracking-widest">Cart</span>
+            <div className="bg-gray-900 text-white px-6 py-3.5 rounded-2xl flex items-center gap-3 shadow-xl shadow-black/10 hover:scale-[1.05] active:scale-[0.95] transition-all">
+              <ShoppingCart size={18} />
+              <span className="text-xs font-black uppercase tracking-widest hidden md:inline">Cart</span>
               {cartCount > 0 && (
-                <span className="bg-white text-[#600B14] w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-black">
+                <span className="bg-[#FF5200] text-white w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-black">
                   {cartCount}
                 </span>
               )}
