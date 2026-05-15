@@ -11,8 +11,8 @@ export interface Product {
   description: string;
   price: number;
   image: string;
-  tag?: string;
-  originalPrice?: number;
+  tag?: string | null;
+  originalPrice?: number | null;
 }
 
 export default function ProductCard({ product }: { product: Product }) {
